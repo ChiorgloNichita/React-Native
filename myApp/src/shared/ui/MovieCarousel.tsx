@@ -1,6 +1,7 @@
 import { useRouter } from "expo-router";
 import React from "react";
-import { Image, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, ScrollView, Text, View } from "react-native";
+import { styles } from "../styles/movieCarousel.styles";
 import type { MovieCardType } from "./MovieCard";
 
 interface Props {
@@ -37,40 +38,3 @@ export default function MovieCarousel({ data }: Props) {
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  card: {
-    marginRight: 14,
-    backgroundColor: "white",
-    borderRadius: 12,
-    shadowColor: "#000",
-    shadowOpacity: 0.15,
-    shadowRadius: 4,
-    elevation: 2,
-    width: 130,
-  },
-  image: {
-    width: 130,
-    height: 190,
-    borderTopLeftRadius: 12,
-    borderTopRightRadius: 12,
-  },
-  noPoster: {
-    width: 130,
-    height: 190,
-    backgroundColor: "#ddd",
-    justifyContent: "center",
-    alignItems: "center",
-    borderTopLeftRadius: 12,
-    borderTopRightRadius: 12,
-  },
-  noPosterText: {
-    color: "#666",
-  },
-  title: {
-    padding: 6,
-    fontWeight: "600",
-    fontSize: 14,
-    color: "#111",
-  },
-});

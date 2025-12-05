@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import { z } from "zod";
 import { findUser, setCurrentUser } from "../../src/features/auth/lib/storage";
-import styles from "./login.styles";
+import styles from "../../src/shared/styles/login.styles";
 
 const schema = z.object({
   email: z.string().email("Введите корректный email"),

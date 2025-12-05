@@ -11,9 +11,9 @@ import {
   TextInput,
   View,
 } from "react-native";
-import styles from "./register.styles";
 import { z } from "zod";
 import { addUser } from "../../src/features/auth/lib/storage";
+import styles from "../../src/shared/styles/register.styles";
 
 const schema = z
   .object({

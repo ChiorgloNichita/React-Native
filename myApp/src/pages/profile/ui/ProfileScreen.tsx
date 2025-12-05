@@ -1,40 +1,53 @@
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { Pressable, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { getCurrentUser, logout } from "../../../features/auth/lib/storage";
+import { profileStyles } from "../../../shared/styles/profile.styles";
 
-export default function Profile() {
-  const [user, setUser] = useState<{ name: string; email: string } | null>(null);
+export default function ProfileScreen() {
+  const [user, setUser] = useState<any>(null);
   const router = useRouter();
 
   useEffect(() => {
-    getCurrentUser().then(setUser);
+    const loadUser = async () => {
+      const u = await getCurrentUser();
+      setUser(u);
+    };
+    loadUser();
   }, []);
 
   const handleLogout = async () => {
-    await logout(); // 👈 правильная функция
+    await logout();
     router.replace("/(auth)/login");
   };
 
   return (
-    <View className="flex-1 items-center justify-center bg-gray-100 px-6">
+    <SafeAreaView
+      edges={["top", "left", "right"]}
+      style={profileStyles.container}
+    >
       {user ? (
-        <>
-          <Text className="text-2xl font-bold text-gray-800 mb-2">
+        <View style={profileStyles.userInfoContainer}>
+          <Text style={profileStyles.userName}>
             Привет, {user.name}!
           </Text>
-          <Text className="text-gray-500 mb-6">{user.email}</Text>
+          <Text style={profileStyles.userEmail}>
+            {user.email}
+          </Text>
 
           <Pressable
             onPress={handleLogout}
-            className="bg-red-500 px-6 py-3 rounded-lg"
+            style={profileStyles.logoutButton}
           >
-            <Text className="text-white font-semibold text-lg">Выйти</Text>
+            <Text style={profileStyles.logoutButtonText}>
+              Выйти
+            </Text>
           </Pressable>
-        </>
+        </View>
       ) : (
-        <Text className="text-lg text-gray-500">Загрузка...</Text>
+        <Text style={profileStyles.loadingText}>Загрузка...</Text>
       )}
-    </View>
+    </SafeAreaView>
   );
 }
