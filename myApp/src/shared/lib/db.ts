@@ -2,7 +2,7 @@ import * as SQLite from "expo-sqlite";
 
 const db = SQLite.openDatabaseSync("movies.db");
 
-// ▶️ Инициализация базы — теперь есть user_id
+//  Инициализация базы — теперь есть user_id
 export async function initDatabase() {
   await db.execAsync(`
     CREATE TABLE IF NOT EXISTS favorites (
@@ -15,10 +15,10 @@ export async function initDatabase() {
     );
   `);
 
-  console.log("✅ Таблица favorites (с user_id) готова");
+  console.log(" Таблица favorites (с user_id) готова");
 }
 
-// ▶️ Добавить в избранное
+//  Добавить в избранное
 export async function addFavorite(
   movie: { id: number; title: string; poster_path: string | null },
   userId: string
@@ -28,20 +28,20 @@ export async function addFavorite(
     [movie.id, movie.title, movie.poster_path, userId]
   );
 
-  console.log(`❤️ Добавлено в избранное (${userId}):`, movie.title);
+  console.log(` Добавлено в избранное (${userId}):`, movie.title);
 }
 
-// ▶️ Удалить из избранного
+//  Удалить из избранного
 export async function removeFavorite(id: number, userId: string) {
   await db.runAsync(
     `DELETE FROM favorites WHERE id = ? AND user_id = ?;`,
     [id, userId]
   );
 
-  console.log(`💔 Удалено из избранного (${userId}):`, id);
+  console.log(` Удалено из избранного (${userId}):`, id);
 }
 
-// ▶️ Получить избранное пользователя
+//  Получить избранное пользователя
 export async function getFavorites(userId: string) {
   const result = await db.getAllAsync(
     `SELECT * FROM favorites WHERE user_id = ? ORDER BY created_at DESC;`,
@@ -50,7 +50,7 @@ export async function getFavorites(userId: string) {
   return result;
 }
 
-// ▶️ Проверить, находится ли фильм в избранном пользователя
+//  Проверить, находится ли фильм в избранном пользователя
 export async function isFavorite(id: number, userId: string) {
   const result = await db.getFirstAsync(
     `SELECT id FROM favorites WHERE id = ? AND user_id = ?;`,

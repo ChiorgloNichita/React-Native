@@ -8,10 +8,12 @@ import {
   Text,
   View,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import YoutubePlayer from "react-native-youtube-iframe";
 
 import { getCurrentUser } from "../../../features/auth/lib/storage";
 import { addFavorite, isFavorite, removeFavorite } from "../../../shared/lib/db";
+import { MovieDetail } from "../../../shared/types/movie.types";
 
 import { movieDetailStyles } from "../../../shared/styles/movieDetail.styles";
 
@@ -19,7 +21,7 @@ const API_KEY = process.env.EXPO_PUBLIC_TMDB_API_KEY;
 
 export default function MovieDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const [movie, setMovie] = useState<any>(null);
+  const [movie, setMovie] = useState<MovieDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [favorite, setFavorite] = useState(false);
 
@@ -49,11 +51,11 @@ export default function MovieDetailScreen() {
     fetchMovie();
   }, [id]);
 
-  // ⭐ Изменение избранного
+  // Изменение избранного
   const toggleFavorite = async () => {
     try {
       const user = await getCurrentUser();
-      if (!user) return;
+      if (!user || !movie) return;
 
       if (favorite) {
         await removeFavorite(movie.id, user.email);
@@ -83,7 +85,7 @@ export default function MovieDetailScreen() {
     );
   }
 
-  if (!movie || movie.success === false) {
+  if (!movie) {
     return (
       <View style={movieDetailStyles.errorContainer}>
         <Text style={movieDetailStyles.errorText}>Не удалось загрузить фильм 😢</Text>
@@ -92,7 +94,8 @@ export default function MovieDetailScreen() {
   }
 
   return (
-    <ScrollView style={movieDetailStyles.scroll}>
+    <SafeAreaView style={movieDetailStyles.safeArea}>
+      <ScrollView style={movieDetailStyles.scroll}>
       <Image
         source={{
           uri: `https://image.tmdb.org/t/p/original${movie.backdrop_path}`,
@@ -109,7 +112,7 @@ export default function MovieDetailScreen() {
 
         {movie.genres && (
           <Text style={movieDetailStyles.genres}>
-            {movie.genres.map((g: any) => g.name).join(", ")}
+            {movie.genres.map((g) => g.name).join(", ")}
           </Text>
         )}
 
@@ -117,28 +120,27 @@ export default function MovieDetailScreen() {
           {movie.overview || "Описание отсутствует."}
         </Text>
 
-        {/* 🎬 Трейлер */}
-        {movie.videos?.results?.length > 0 && (
+        {movie.videos?.results && movie.videos.results.length > 0 && (
           <View style={movieDetailStyles.trailerBlock}>
             <Text style={movieDetailStyles.trailerTitle}>Трейлер</Text>
             <YoutubePlayer height={220} videoId={movie.videos.results[0].key} />
           </View>
         )}
 
-        {/* ❤️ Избранное */}
         <Pressable
           onPress={toggleFavorite}
           style={[
             movieDetailStyles.favoriteButton,
-            { backgroundColor: favorite ? "#777" : "#e50914" },
+            favorite
+              ? movieDetailStyles.favoriteButtonActive
+              : movieDetailStyles.favoriteButtonInactive,
           ]}
         >
           <Text style={movieDetailStyles.favoriteButtonText}>
-            {favorite ? "💔 Удалить из избранного" : "❤️ Добавить в избранное"}
+            {favorite ? " Удалить из избранного" : " Добавить в избранное"}
           </Text>
         </Pressable>
 
-        {/* ← Назад */}
         <Pressable
           style={movieDetailStyles.backButton}
           onPress={() => router.back()}
@@ -146,6 +148,7 @@ export default function MovieDetailScreen() {
           <Text style={movieDetailStyles.backButtonText}>← Назад</Text>
         </Pressable>
       </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }

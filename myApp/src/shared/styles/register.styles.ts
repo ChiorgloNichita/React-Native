@@ -50,4 +50,12 @@ export default StyleSheet.create({
     marginTop: 16,
     fontSize: 15,
   },
+  screen: {
+    flex: 1,
+    backgroundColor: "#fff",
+  },
+  linkAction: {
+    color: "#007bff",
+    fontWeight: "600",
+  },
 });

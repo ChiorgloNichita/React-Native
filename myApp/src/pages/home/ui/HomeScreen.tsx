@@ -1,7 +1,8 @@
-import { ScrollView, View, Text, ActivityIndicator } from "react-native";
+import { ActivityIndicator, ScrollView, Text, View } from "react-native";
+import { usePopularMovies } from "../../../entities/movie/queries";
+import { homeStyles } from "../../../shared/styles/home.styles";
 import HeroCarousel from "../../../shared/ui/HeroCarousel";
 import MovieCarousel from "../../../shared/ui/MovieCarousel";
-import { usePopularMovies } from "../../../entities/movie/queries";
 
 export default function HomeScreen() {
   const { data, isLoading, isError } = usePopularMovies();
@@ -9,38 +10,35 @@ export default function HomeScreen() {
 
   if (isLoading)
     return (
-      <View className="flex-1 items-center justify-center bg-white">
+      <View style={homeStyles.loadingContainer}>
         <ActivityIndicator size="large" color="#e50914" />
-        <Text className="text-gray-500 mt-3">Загрузка фильмов...</Text>
+        <Text style={homeStyles.loadingText}>Загрузка фильмов...</Text>
       </View>
     );
 
   if (isError)
     return (
-      <View className="flex-1 items-center justify-center bg-white">
-        <Text className="text-red-500 text-lg">Ошибка при загрузке данных 😢</Text>
+      <View style={homeStyles.errorContainer}>
+        <Text style={homeStyles.errorText}>Ошибка при загрузке данных 😢</Text>
       </View>
     );
 
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: "#fff" }}
+      style={homeStyles.scrollView}
       showsVerticalScrollIndicator={false}
     >
-      {/* Большой слайдер */}
       <HeroCarousel movies={movies.slice(0, 6)} />
 
-      {/* Популярные фильмы */}
-      <View style={{ marginTop: 20, paddingHorizontal: 16 }}>
-        <Text style={{ fontSize: 22, fontWeight: "800", color: "#111", marginBottom: 10 }}>
+      <View style={homeStyles.sectionContainer}>
+        <Text style={homeStyles.sectionTitle}>
           Популярные фильмы
         </Text>
         <MovieCarousel data={movies.slice(6, 16)} />
       </View>
 
-      {/* Рекомендуем */}
-      <View style={{ marginTop: 30, paddingHorizontal: 16, marginBottom: 50 }}>
-        <Text style={{ fontSize: 22, fontWeight: "800", color: "#111", marginBottom: 10 }}>
+      <View style={homeStyles.sectionContainerLast}>
+        <Text style={homeStyles.sectionTitle}>
           Рекомендуем
         </Text>
         <MovieCarousel data={movies.slice(16, 26)} />

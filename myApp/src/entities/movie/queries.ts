@@ -1,15 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { MoviesResponse } from "../../shared/types/movie.types";
 
-const API_KEY = "d425a67d3cf50a745ea99f892ebb24f7"; // 🔑 сюда вставь свой ключ TMDB
+const API_KEY = process.env.EXPO_PUBLIC_TMDB_API_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
 
 export const useSearchMovies = (query: string) =>
-  useQuery({
+  useQuery<MoviesResponse>({
     queryKey: ["search", query],
     queryFn: async () => {
-      if (!query) return { results: [] };
-      const res = await axios.get(
+      if (!query) return { results: [], page: 1, total_pages: 0, total_results: 0 };
+      const res = await axios.get<MoviesResponse>(
         `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${query}&language=ru-RU`
       );
       return res.data;
@@ -18,10 +19,10 @@ export const useSearchMovies = (query: string) =>
   });
 
 export const usePopularMovies = () =>
-  useQuery({
+  useQuery<MoviesResponse>({
     queryKey: ["popular"],
     queryFn: async () => {
-      const res = await axios.get(
+      const res = await axios.get<MoviesResponse>(
         `${BASE_URL}/movie/popular?api_key=${API_KEY}&language=ru-RU`
       );
       return res.data;

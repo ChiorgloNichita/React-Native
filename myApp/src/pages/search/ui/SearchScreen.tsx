@@ -12,10 +12,11 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { searchStyles } from "../../../shared/styles/search.styles";
+import { Movie } from "../../../shared/types/movie.types";
 
 export default function SearchScreen() {
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState<any[]>([]);
+  const [results, setResults] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -51,7 +52,7 @@ export default function SearchScreen() {
     return () => clearTimeout(delay);
   }, [query]);
 
-  const renderItem = ({ item }: { item: any }) => (
+  const renderItem = ({ item }: { item: Movie }) => (
     <Pressable
       onPress={() => router.push(`/movie/${item.id}`)}
       style={[searchStyles.card, { width: CARD_WIDTH }]}
@@ -63,7 +64,7 @@ export default function SearchScreen() {
         />
       ) : (
         <View style={[searchStyles.poster, searchStyles.noPoster]}>
-          <Text style={{ color: "#777" }}>Нет постера</Text>
+          <Text style={searchStyles.noPosterText}>Нет постера</Text>
         </View>
       )}
 
@@ -80,7 +81,7 @@ export default function SearchScreen() {
   );
 
   return (
-    <SafeAreaView style={searchStyles.container} edges={["top"]}>
+    <SafeAreaView style={searchStyles.container}>
       <View style={searchStyles.searchWrap}>
         <TextInput
           placeholder="Поиск фильмов..."

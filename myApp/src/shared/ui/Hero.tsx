@@ -1,13 +1,7 @@
 import { useRouter } from "expo-router";
 import { ImageBackground, Pressable, Text, View } from "react-native";
 import { styles } from "../styles/hero.styles";
-
-type Movie = {
-  id: number;
-  title: string;
-  backdrop_path: string | null;
-  overview?: string;
-};
+import { Movie } from "../types/movie.types";
 
 export default function Hero({ movie }: { movie: Movie | undefined }) {
   const router = useRouter();

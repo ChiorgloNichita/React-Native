@@ -3,6 +3,9 @@ import { Dimensions, StyleSheet } from "react-native";
 const { width } = Dimensions.get("window");
 
 export const styles = StyleSheet.create({
+  scrollContainer: {
+    height: 460,
+  },
   slide: {
     width,
     height: 460,

@@ -1,16 +1,12 @@
 import { useRouter } from "expo-router";
 import { Image, Pressable, Text, View } from "react-native";
 import { styles } from "../styles/movieCard.styles";
+import { Movie } from "../types/movie.types";
 
-export interface MovieCardType {
-  id: number;
-  title: string;
-  poster_path: string | null;
-  vote_average: number;
-}
+export type MovieCardType = Movie;
 
 interface Props {
-  movie: MovieCardType;
+  movie: Movie;
 }
 
 export default function MovieCard({ movie }: Props) {

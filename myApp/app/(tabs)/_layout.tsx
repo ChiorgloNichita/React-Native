@@ -13,7 +13,6 @@ export default function TabsLayout() {
         tabBarStyle: tabsLayoutStyles.tabBar,
       }}
     >
-      {/* 🏠 Главная */}
       <Tabs.Screen
         name="index"
         options={{
@@ -24,7 +23,6 @@ export default function TabsLayout() {
         }}
       />
 
-      {/* 🔍 Поиск */}
       <Tabs.Screen
         name="search"
         options={{
@@ -35,13 +33,22 @@ export default function TabsLayout() {
         }}
       />
 
-      {/* ❤️ Избранное */}
       <Tabs.Screen
         name="favorites"
         options={{
           title: "Избранное",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="heart-outline" size={size} color={color} />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: "Профиль",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="person-outline" size={size} color={color} />
           ),
         }}
       />

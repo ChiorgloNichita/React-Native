@@ -42,7 +42,7 @@ export default function Login() {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={{ flex: 1, backgroundColor: "#fff" }}
+      style={styles.screen}
     >
       <ScrollView
         contentContainerStyle={styles.container}
@@ -50,7 +50,6 @@ export default function Login() {
       >
         <Text style={styles.title}>Вход</Text>
 
-        {/* Email */}
         <Controller
           control={control}
           name="email"
@@ -70,7 +69,6 @@ export default function Login() {
           )}
         />
 
-        {/* Пароль */}
         <Controller
           control={control}
           name="password"
@@ -94,11 +92,10 @@ export default function Login() {
           <Text style={styles.buttonText}>Войти</Text>
         </Pressable>
 
-        {/* Ссылка на регистрацию */}
         <Pressable onPress={() => router.push("/(auth)/register")}>
           <Text style={styles.link}>
             Нет аккаунта?{" "}
-            <Text style={{ color: "#007bff", fontWeight: "600" }}>
+            <Text style={styles.linkAction}>
               Зарегистрироваться
             </Text>
           </Text>

@@ -7,6 +7,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingVertical: 40,
   },
+  screen: {
+    flex: 1,
+    backgroundColor: "#fff",
+  },
   title: {
     fontSize: 28,
     fontWeight: "800",
@@ -49,6 +53,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 16,
     fontSize: 15,
+  },
+  linkAction: {
+    color: "#007bff",
+    fontWeight: "600",
   },
 });
 

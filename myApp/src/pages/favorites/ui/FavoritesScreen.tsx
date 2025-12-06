@@ -5,9 +5,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { getCurrentUser } from "../../../features/auth/lib/storage";
 import { getFavorites } from "../../../shared/lib/db";
 import { favoritesStyles } from "../../../shared/styles/favorites.styles";
+import { FavoriteMovie } from "../../../shared/types/user.types";
 
 export default function FavoritesScreen() {
-  const [favorites, setFavorites] = useState<any[]>([]);
+  const [favorites, setFavorites] = useState<FavoriteMovie[]>([]);
   const router = useRouter();
 
   useFocusEffect(
@@ -17,7 +18,7 @@ export default function FavoritesScreen() {
         if (!user) return;
 
         const favs = await getFavorites(user.email);
-        setFavorites(favs);
+        setFavorites(favs as FavoriteMovie[]);
       };
 
       loadFavorites();
@@ -35,7 +36,7 @@ export default function FavoritesScreen() {
       ) : (
         <ScrollView style={favoritesStyles.scrollView} showsVerticalScrollIndicator={false}>
           <Text style={favoritesStyles.headerTitle}>
-            ❤️ Избранное
+             Избранное
           </Text>
 
           <View

@@ -7,8 +7,9 @@ import {
   View,
 } from "react-native";
 import { styles } from "../styles/heroCarousel.styles";
+import { Movie } from "../types/movie.types";
 
-export default function HeroCarousel({ movies }: { movies: any[] }) {
+export default function HeroCarousel({ movies }: { movies: Movie[] }) {
   const router = useRouter();
 
   return (
@@ -16,7 +17,7 @@ export default function HeroCarousel({ movies }: { movies: any[] }) {
       horizontal
       pagingEnabled
       showsHorizontalScrollIndicator={false}
-      style={{ height: 460 }}
+      style={styles.scrollContainer}
     >
       {movies.map((item) => (
         <Pressable key={item.id}>

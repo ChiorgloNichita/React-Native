@@ -8,8 +8,8 @@ export default function RootLayout() {
 
   useEffect(() => {
     initDatabase()
-      .then(() => console.log("✅ Database initialized"))
-      .catch((err) => console.error("❌ DB error:", err));
+      .then(() => console.log(" Database initialized"))
+      .catch((err) => console.error(" DB error:", err));
   }, []);
 
   return (

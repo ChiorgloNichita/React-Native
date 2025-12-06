@@ -30,7 +30,7 @@ const schema = z
 type Form = z.infer<typeof schema>;
 
 export default function Register() {
-  const { control, handleSubmit } = useForm<Form>({
+  const { control, handleSubmit } = useForm<Form>({ // создаёт объект формы.
     resolver: zodResolver(schema),
   });
   const router = useRouter();
@@ -48,14 +48,13 @@ export default function Register() {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={{ flex: 1, backgroundColor: "#fff" }}
+      style={styles.screen}
     >
       <ScrollView contentContainerStyle={styles.container}>
         <Text style={styles.title}>Регистрация</Text>
 
-        {/* Имя */}
         <Controller
-          control={control}
+          control={control} 
           name="name"
           render={({ field: { onChange, value }, fieldState: { error } }) => (
               <View style={styles.inputGroup}>
@@ -71,7 +70,6 @@ export default function Register() {
           )}
         />
 
-        {/* Email */}
         <Controller
           control={control}
           name="email"
@@ -91,7 +89,6 @@ export default function Register() {
           )}
         />
 
-        {/* Пароль */}
         <Controller
           control={control}
           name="password"
@@ -110,7 +107,6 @@ export default function Register() {
           )}
         />
 
-        {/* Повтор пароля */}
         <Controller
           control={control}
           name="confirm"
@@ -129,16 +125,14 @@ export default function Register() {
           )}
         />
 
-        {/* Кнопка регистрации */}
         <Pressable style={styles.button} onPress={handleSubmit(onSubmit)}>
           <Text style={styles.buttonText}>Зарегистрироваться</Text>
         </Pressable>
-
-        {/* Ссылка на вход */}
+        
         <Pressable onPress={() => router.push("/(auth)/login")}>
           <Text style={styles.link}>
             Уже есть аккаунт?{" "}
-            <Text style={{ color: "#007bff", fontWeight: "600" }}>Войти</Text>
+            <Text style={styles.linkAction}>Войти</Text>
           </Text>
         </Pressable>
       </ScrollView>

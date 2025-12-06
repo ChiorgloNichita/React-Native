@@ -13,7 +13,7 @@ export default function Index() {
     });
   }, []);
 
-  if (!ready) return null; // можно сделать Splash
+  if (!ready) return null; 
 
   return loggedIn ? <Redirect href="/(tabs)" /> : <Redirect href="/(auth)/login" />;
 }

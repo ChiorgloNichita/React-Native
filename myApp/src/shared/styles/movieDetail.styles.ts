@@ -29,6 +29,10 @@ export const movieDetailStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
   },
+  safeArea: {
+    flex: 1,
+    backgroundColor: "#fff",
+  },
 
   banner: {
     width: "100%",
@@ -79,6 +83,14 @@ export const movieDetailStyles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 8,
     alignItems: "center",
+  },
+
+  favoriteButtonActive: {
+    backgroundColor: "#777",
+  },
+
+  favoriteButtonInactive: {
+    backgroundColor: "#e50914",
   },
 
   favoriteButtonText: {
